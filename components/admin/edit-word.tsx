@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 // shadcn ui components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,8 +36,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 // Zod Schema
 const formSchema = z.object({
-  id: z.string(),
-  word: z.string().min(2).max(10),
+  id: z.string().min(1),
+  word: z.string().min(2).max(30),
   meaning: z.string().min(2).max(30),
   kanji: z.string().max(10).optional(),
   type: z.string().min(1).max(30),
@@ -48,9 +48,10 @@ import { WordType, GroupType } from "@/constants";
 interface Props {
   groups: GroupType[];
   word: WordType;
+  type: string;
 }
 
-export function EditWord({ word, groups }: Props) {
+export function EditWord({ word, groups, type }: Props) {
   // Capitalize first letter function
   function capitalizeFirstLetter(str: string) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -65,7 +66,7 @@ export function EditWord({ word, groups }: Props) {
       word: word.word,
       meaning: word.meaning,
       kanji: word.kanji ? word.kanji : undefined,
-      type: group.type,
+      type: type,
       category: group.category,
     },
   });
@@ -109,7 +110,7 @@ export function EditWord({ word, groups }: Props) {
         <Button variant="purple" size="icon">
           <Pencil2Icon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Pencil2Icon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-          <span className="sr-only">Edit Noun</span>
+          <span className="sr-only">Edit Word</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -122,9 +123,24 @@ export function EditWord({ word, groups }: Props) {
                 <FormItem>
                   <FormLabel>Word</FormLabel>
                   <FormControl>
-                    <Input placeholder="e.g. くるま" {...field} />
+                    <Input placeholder="e.g. car" {...field} />
                   </FormControl>
                   <FormDescription>Enter the word.</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Separator className="my-4" />
+            <FormField
+              control={form.control}
+              name="meaning"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meaning</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g. くるま" {...field} />
+                  </FormControl>
+                  <FormDescription>Enter meaning of the word.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -149,21 +165,6 @@ export function EditWord({ word, groups }: Props) {
             <Separator className="my-4" />
             <FormField
               control={form.control}
-              name="meaning"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Meaning</FormLabel>
-                  <FormControl>
-                    <Input placeholder="e.g. car" {...field} />
-                  </FormControl>
-                  <FormDescription>Enter meaning of the word.</FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Separator className="my-4" />
-            <FormField
-              control={form.control}
               name="category"
               render={({ field }) => (
                 <FormItem>
@@ -178,7 +179,10 @@ export function EditWord({ word, groups }: Props) {
                       </SelectTrigger>
                       <SelectContent>
                         {groups.map((group: GroupType) => (
-                          <SelectItem value={group.category}>
+                          <SelectItem
+                            key={`${group.category}-edit`}
+                            value={group.category}
+                          >
                             {capitalizeFirstLetter(group.category)}
                           </SelectItem>
                         ))}

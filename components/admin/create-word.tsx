@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { GroupType, TypeType } from "@/constants";
+import { PlusIcon } from "@radix-ui/react-icons";
 // Shadcn ui components
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -36,8 +37,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 // Zod Schema
 const formSchema = z.object({
-  id: z.string(),
-  word: z.string().min(2).max(10),
+  word: z.string().min(2).max(30),
   meaning: z.string().min(2).max(30),
   kanji: z.string().max(10).optional(),
   type: z.string().min(1).max(30),
@@ -49,12 +49,12 @@ export default function CreateWord() {
   const [types, setTypes] = useState<TypeType[]>([]);
 
   useEffect(() => {
-    fetch(`/api/groups`)
+    fetch(`/api/public/groups`)
       .then((res) => res.json())
       .then((data) => {
         setGroups(data.arr);
       });
-    fetch(`/api/types`)
+    fetch(`/api/public/types`)
       .then((res) => res.json())
       .then((data) => {
         setTypes(data.arr);
@@ -72,7 +72,7 @@ export default function CreateWord() {
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const response = await fetch("/api/words", {
+      const response = await fetch(`/api/words`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -108,11 +108,10 @@ export default function CreateWord() {
   return (
     <AlertDialog open={open}>
       <AlertDialogTrigger asChild onClick={openForm}>
-        <Button
-          variant="purple"
-          className="w-60 my-2 p-4 px-24 borderrounded-xl"
-        >
-          Add Word
+        <Button variant="purple" size="icon" className="">
+          <PlusIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+          <PlusIcon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+          <span className="sr-only">Add Word</span>
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
@@ -126,9 +125,26 @@ export default function CreateWord() {
                   <FormItem>
                     <FormLabel>Word</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g. くるま" {...field} />
+                      <Input placeholder="e.g. car" {...field} />
                     </FormControl>
                     <FormDescription>Enter the word.</FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Separator className="my-4" />
+              <FormField
+                control={form.control}
+                name="meaning"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Meaning</FormLabel>
+                    <FormControl>
+                      <Input placeholder="e.g. くるま" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Enter meaning of the word.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -151,23 +167,7 @@ export default function CreateWord() {
                 )}
               />
               <Separator className="my-4" />
-              <FormField
-                control={form.control}
-                name="meaning"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Meaning</FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g. car" {...field} />
-                    </FormControl>
-                    <FormDescription>
-                      Enter meaning of the word.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Separator className="my-4" />
+
               <FormField
                 control={form.control}
                 name="type"
@@ -216,7 +216,11 @@ export default function CreateWord() {
                             <SelectContent>
                               {groups
                                 .filter(
-                                  (obj) => obj.type === form.watch("type")
+                                  (obj) =>
+                                    obj.typeId ===
+                                    types.filter(
+                                      (temp) => temp.type === form.watch("type")
+                                    )[0].id
                                 )
                                 .map((item) => (
                                   <SelectItem

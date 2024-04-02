@@ -47,7 +47,6 @@ export interface GroupType {
   createdAt?: Date;
   updatedAt?: Date;
   category: string;
-  type: string;
   typeId?: string;
 }
 

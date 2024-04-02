@@ -19,6 +19,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { DeleteWord } from "../admin/delete-word";
 // Props
 interface Props {
   arr: WordType[];
@@ -36,7 +37,7 @@ export default function Category({
   groups,
 }: Props) {
   function capitalizeFirstLetter(str: string) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str?.charAt(0).toUpperCase() + str?.slice(1);
   }
 
   return (
@@ -53,7 +54,7 @@ export default function Category({
               <TableHeader>
                 <TableRow>
                   <TableHead>Index</TableHead>
-                  <TableHead>{capitalizeFirstLetter(type)}</TableHead>
+                  <TableHead>Word</TableHead>
                   <TableHead>Meaning</TableHead>
                   <TableHead className={access === "user" ? "text-right" : ""}>
                     Kanji
@@ -69,16 +70,17 @@ export default function Category({
                 {arr.map((item: WordType, index: number) => (
                   <TableRow key={item.id}>
                     <TableCell>{index + 1}</TableCell>
-                    <TableCell>{item.meaning}</TableCell>
                     <TableCell>{item.word}</TableCell>
+                    <TableCell>{item.meaning}</TableCell>
                     <TableCell
                       className={access === "user" ? "text-right" : ""}
                     >
                       {item.kanji ? item.kanji : "N/A"}
                     </TableCell>
                     {access === "admin" && (
-                      <TableCell className="flex justify-center items-center">
-                        <EditWord word={item} groups={groups} />
+                      <TableCell className="flex justify-center items-center gap-2">
+                        <EditWord word={item} groups={groups} type={type} />
+                        <DeleteWord id={item.id} />
                       </TableCell>
                     )}
                   </TableRow>

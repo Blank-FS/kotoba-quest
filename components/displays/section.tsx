@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-import { WordType, GroupType } from "@/constants";
+import { WordType, GroupType, TypeType } from "@/constants";
 import Category from "./category";
 
 interface Props {
@@ -35,7 +35,7 @@ export default function Section({ type, className, access }: Props) {
         return (
           <Category
             key={group.id}
-            type={group.type}
+            type={type}
             category={group.category}
             arr={arr}
             access={access}

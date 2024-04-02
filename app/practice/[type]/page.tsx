@@ -4,7 +4,7 @@ import React from "react";
 const page = ({ params }: { params: { type: string } }) => {
   return (
     <>
-      <PracticeDisplay amount={5} type={params.type} />
+      <PracticeDisplay amount={10} type={params.type} />
     </>
   );
 };

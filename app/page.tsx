@@ -26,7 +26,7 @@ export default function Home() {
           variant="purple"
           className="w-60 my-4 p-4 borderrounded-xl flex justify-center"
         >
-          Admin
+          Settings
         </Button>
       </Link>
     </>

@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     let data;
     type
       ? (data = await prisma.word.findMany({
-          where: { Group: { type: type } },
+          where: { Group: { Type: { type: type } } },
         }))
       : (data = await prisma.word.findMany());
     // Creating pset
@@ -23,5 +23,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ pset });
   } catch (error) {
     console.error("Error getting pset:", error);
+    return NextResponse.json({ error });
   }
 }

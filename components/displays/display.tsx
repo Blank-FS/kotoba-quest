@@ -3,7 +3,6 @@ import React from "react";
 import { useState } from "react";
 import MenuBar from "@/components/menu-bar";
 import Section from "./section";
-import CreateWord from "../admin/create-word";
 
 interface Props {
   access: string;
@@ -18,11 +17,6 @@ export default function Display({ access }: Props) {
 
   return (
     <>
-      {access === "admin" && (
-        <div className="flex justify-center sm:justify-end items-center w-full">
-          <CreateWord />
-        </div>
-      )}
       <MenuBar switchDisplay={switchDisplay} display={display} />
       {display === "nouns" && (
         <Section className="w-full" type="noun" access={access} />

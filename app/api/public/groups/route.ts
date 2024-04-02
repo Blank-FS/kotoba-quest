@@ -12,13 +12,13 @@ export async function GET(req: NextRequest) {
       arr = await prisma.group.findMany();
     } else {
       arr = await prisma.group.findMany({
-        where: { type: type ? type : "" },
+        where: { Type: { type: type ? type : "" } },
         orderBy: {
           category: "asc",
         },
         select: {
           id: true,
-          type: true,
+          Type: true,
           category: true,
         },
       });
@@ -26,5 +26,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ arr });
   } catch (error) {
     console.error("Error getting data:", error);
+    return NextResponse.json({ error });
   }
 }

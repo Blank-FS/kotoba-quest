@@ -11,9 +11,9 @@ export async function GET(req: NextRequest) {
       arr = await prisma.word.findMany();
     } else {
       arr = await prisma.word.findMany({
-        where: { Group: { type: type ? type : "" } },
+        where: { Group: { Type: { type: type ? type : "" } } },
         orderBy: {
-          meaning: "asc",
+          word: "asc",
         },
         select: {
           id: true,
@@ -27,65 +27,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ arr });
   } catch (error) {
     console.error("Error getting data:", error);
+    return NextResponse.json({ error });
   }
-}
-
-// POST REQUEST
-export async function POST(req: NextRequest) {
-  const data = await req.json();
-  try {
-    const group = await prisma.group.findFirst({
-      where: {
-        category: data.category,
-        type: data.type,
-      },
-      select: {
-        id: true,
-      },
-    });
-    if (group) {
-      const createdWord = await prisma.word.create({
-        data: {
-          word: data.word,
-          meaning: data.meaning,
-          kanji: data.kanji,
-          groupId: group.id,
-        },
-      });
-    }
-  } catch (error) {
-    console.error("Error creating word:", error);
-  }
-  return NextResponse.json({ data });
-}
-
-// PUT REQUEST
-export async function PUT(req: Request) {
-  const data = await req.json();
-  try {
-    const group = await prisma.group.findFirst({
-      where: {
-        type: data.type,
-        category: data.category,
-      },
-      select: {
-        id: true,
-      },
-    });
-    const editedWord = await prisma.word.update({
-      where: {
-        id: data.id,
-      },
-      data: {
-        word: data.word,
-        meaning: data.meaning,
-        kanji: data.kanji,
-        groupId: group?.id,
-        updatedAt: new Date(),
-      },
-    });
-  } catch (error) {
-    console.error("Error editing word:", error);
-  }
-  return NextResponse.json({ data });
 }

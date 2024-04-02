@@ -43,8 +43,8 @@ export default function Unit({
         }`}
       >
         {type === "translation" &&
-          `${unit.word}${unit.kanji ? ` (${unit.kanji})` : ""}`}
-        {type === "meaning" && `${unit.meaning}`}
+          `${unit.meaning}${unit.kanji ? ` (${unit.kanji})` : ""}`}
+        {type === "meaning" && `${unit.word}`}
       </Button>
     </div>
   );

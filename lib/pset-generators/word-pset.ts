@@ -25,8 +25,9 @@ export function wordPset(amount: number, wordData: WordType[]) {
   let pset: WordType[][] = [];
   for (let i = 0; i < amount; i++) {
     let rng = getRandomInt(0, validChoices.length);
-    let word = { ...wordData[rng], correct: true }; // Get the correct choice
+    let word = { ...validChoices[rng], correct: true }; // Get the correct choice
     validChoices.splice(rng, 1); // Remove correct choice from pool
+    if (validChoices.length === 0) validChoices = wordData.slice(); // Refresh valid choices
     let copyData = shuffleArray(
       wordData.filter(
         (value: any, index: number) =>

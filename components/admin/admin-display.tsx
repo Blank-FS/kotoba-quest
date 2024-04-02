@@ -1,22 +1,20 @@
-"use client";
 import React from "react";
-import { useState, useEffect } from "react";
-//import constants
-import { NounType, categories } from "@/constants";
-//
-import CreateNoun from "@/components/admin/create-noun";
 import Display from "../displays/display";
+import CreateWord from "../admin/create-word";
+import Signout from "./signout";
+import { Separator } from "../ui/separator";
+import { Button } from "../ui/button";
 
-export default function AdminDisplay() {
-  const [nouns, setNouns] = useState<NounType[] | null>(null);
-
-  useEffect(() => {
-    fetch("/api/nouns")
-      .then((res) => res.json())
-      .then((data) => {
-        setNouns(data.data);
-      });
-  }, []);
-
-  return <Display type="admin" />;
+export default async function AdminDisplay() {
+  return (
+    <>
+      <div className="my-2 flex justify-between items-center w-full">
+        <Signout />
+        <Button variant="link">Admin Dashboard</Button>
+        <CreateWord />
+      </div>
+      <Separator className="my-4" />
+      <Display access="admin" />
+    </>
+  );
 }

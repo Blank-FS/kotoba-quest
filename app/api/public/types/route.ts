@@ -8,5 +8,6 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ arr });
   } catch (error) {
     console.error("Error getting data:", error);
+    return NextResponse.json({ error });
   }
 }

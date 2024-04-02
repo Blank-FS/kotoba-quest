@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Comic_Neue } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import Header from "@/components/Header";
+import Header from "@/components/header";
 
 const comic = Comic_Neue({ weight: "400", subsets: ["latin"] });
 

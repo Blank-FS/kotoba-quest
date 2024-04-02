@@ -15,10 +15,10 @@ export default function Question({ type, className, problem }: Props) {
     <p className={className}>
       {type === "translation" &&
         correctOption &&
-        `What is the japanese word for "${correctOption.meaning}" ?`}
+        `What is the japanese word for "${correctOption.word}" ?`}
       {type === "meaning" &&
         correctOption &&
-        `What is the meaning of "${`${correctOption.word}${
+        `What is the meaning of "${`${correctOption.meaning}${
           correctOption.kanji ? ` (${correctOption.kanji})` : ""
         }`}" ?`}
       {!correctOption && "Loading..."}

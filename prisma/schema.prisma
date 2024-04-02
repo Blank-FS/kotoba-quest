@@ -32,13 +32,12 @@ model Group {
   id        String   @id @default(uuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now())
-  type      String
   category  String
   words     Word[]
   Type      Type     @relation(fields: [typeId], references: [id])
   typeId    String
 
-  @@unique([type, category])
+  @@unique([typeId, category])
 }
 
 // Types
