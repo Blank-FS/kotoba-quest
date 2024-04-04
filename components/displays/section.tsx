@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useState, useEffect } from "react";
-import { WordType, GroupType, TypeType } from "@/constants";
+import { WordType, GroupType } from "@/constants";
 import Category from "./category";
 
 interface Props {
