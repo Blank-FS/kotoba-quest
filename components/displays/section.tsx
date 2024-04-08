@@ -13,36 +13,42 @@ interface Props {
 export default function Section({ type, className, access }: Props) {
   const [words, setWords] = useState<WordType[]>([]);
   const [groups, setGroups] = useState<GroupType[]>([]);
+  const [error, setError] = useState<string>();
 
   useEffect(() => {
     fetch(`/api/public/words?type=${type}`)
       .then((res) => res.json())
       .then((data) => {
         setWords(data.arr);
+        setError(data.error);
       });
     fetch(`/api/public/groups?type=${type}`)
       .then((res) => res.json())
       .then((data) => {
         setGroups(data.arr);
+        setError(data.error);
       });
   }, []);
 
-  return (
-    <div className={className}>
-      {groups.map((group: GroupType) => {
-        // Filter words to be of the group
-        const arr = words.filter((obj) => obj.groupId === group.id);
-        return (
-          <Category
-            key={group.id}
-            type={type}
-            category={group.category}
-            arr={arr}
-            access={access}
-            groups={groups}
-          />
-        );
-      })}
-    </div>
-  );
+  if (groups)
+    return (
+      <div className={className}>
+        {groups.map((group: GroupType) => {
+          // Filter words to be of the group
+          const arr = words.filter((obj) => obj.groupId === group.id);
+          return (
+            <Category
+              key={group.id}
+              type={type}
+              category={group.category}
+              arr={arr}
+              access={access}
+              groups={groups}
+            />
+          );
+        })}
+      </div>
+    );
+
+  return <div className={className}>{JSON.stringify(error)}</div>;
 }

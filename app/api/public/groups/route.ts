@@ -3,8 +3,8 @@ import prisma from "@/prisma/db";
 
 // GET REQUEST
 export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
   try {
-    const { searchParams } = new URL(req.url);
     const type = searchParams ? searchParams.get("type") : null;
     let arr;
     // No Query Parameters

@@ -4,8 +4,8 @@ import { wordPset } from "@/lib/pset-generators/word-pset";
 
 // GET REQUEST
 export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
   try {
-    const { searchParams } = new URL(req.url);
     const amount = searchParams.get("amount");
     const type = searchParams.get("type");
     //Getting data
