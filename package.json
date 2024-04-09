@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma generate && next build",
-    "start": "next start",
+    "build": "next build",
+    "start": "npx prisma generate && next start",
     "lint": "next lint",
     "devPrisma": "tsx prisma/script.ts",
     "postinstall": "npx prisma generate"
