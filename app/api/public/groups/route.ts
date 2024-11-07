@@ -1,3 +1,5 @@
+// AWS RDS unsubscribed
+/*
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 
@@ -23,9 +25,11 @@ export async function GET(req: NextRequest) {
         },
       });
     }
+    if (type === "verb") console.log(arr);
     return NextResponse.json({ arr });
   } catch (error) {
     console.error("Error getting data:", error);
     return NextResponse.json({ error });
   }
 }
+  */

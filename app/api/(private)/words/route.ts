@@ -1,3 +1,5 @@
+// AWS RDS unsubscribed, no put, delete, or post requests
+/*
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 
@@ -77,3 +79,4 @@ export async function DELETE(req: Request) {
   }
   return NextResponse.json({ data });
 }
+  */

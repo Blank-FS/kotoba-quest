@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/prisma/db";
+// import prisma from "@/prisma/db";
 import { wordPset } from "@/lib/pset-generators/word-pset";
+import { dataMap } from "@/constants/staticData";
 
 // GET REQUEST
 export async function GET(req: NextRequest) {
@@ -9,12 +10,15 @@ export async function GET(req: NextRequest) {
     const amount = searchParams.get("amount");
     const type = searchParams.get("type");
     //Getting data
-    let data;
+    let data = type ? dataMap.get(type) : dataMap.get("noun");
+    /*
     type
       ? (data = await prisma.word.findMany({
           where: { Group: { Type: { type: type } } },
         }))
       : (data = await prisma.word.findMany());
+    */
+
     // Creating pset
     let pset;
     amount

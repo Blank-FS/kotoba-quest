@@ -1,20 +1,30 @@
-"use client";
 import React from "react";
-import { useState, useEffect } from "react";
 import { WordType, GroupType } from "@/constants";
 import Category from "./category";
+import { categoryMap, dataMap } from "@/constants/staticData";
 
 interface Props {
   type: string;
   className?: string;
   access: string;
+  words: WordType[];
+  groups: GroupType[];
+  error?: string;
 }
 
-export default function Section({ type, className, access }: Props) {
+export default function Section({
+  type,
+  className,
+  access,
+  words,
+  groups,
+  error,
+}: Props) {
+  // Turned of AWS RDS database, using static data.
+  /*
   const [words, setWords] = useState<WordType[]>([]);
   const [groups, setGroups] = useState<GroupType[]>([]);
-  const [error, setError] = useState<string>();
-
+  const [error, setError] = useState<string>("Unable to get Data");
   useEffect(() => {
     fetch(`/api/public/words?type=${type}`)
       .then((res) => res.json())
@@ -28,7 +38,7 @@ export default function Section({ type, className, access }: Props) {
         setGroups(data.arr);
         setError(data.error);
       });
-  }, []);
+  }, []);*/
 
   if (groups)
     return (

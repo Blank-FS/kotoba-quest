@@ -44,6 +44,7 @@ export interface WordType {
 
 export interface GroupType {
   id: string;
+  Type?: any;
   createdAt?: Date;
   updatedAt?: Date;
   category: string;

@@ -22,7 +22,7 @@ export default function MenuBar({ className, switchDisplay, display }: Props) {
       <MenuBadge
         className={style}
         content="Nouns"
-        value="nouns"
+        value="noun"
         onClick={switchDisplay}
         display={display}
       />
@@ -30,7 +30,7 @@ export default function MenuBar({ className, switchDisplay, display }: Props) {
       <MenuBadge
         className={style}
         content="Adjectives"
-        value="adjectives"
+        value="adjective"
         onClick={switchDisplay}
         display={display}
       />
@@ -38,7 +38,7 @@ export default function MenuBar({ className, switchDisplay, display }: Props) {
       <MenuBadge
         className={style}
         content="Verbs"
-        value="verbs"
+        value="verb"
         onClick={switchDisplay}
         display={display}
       />

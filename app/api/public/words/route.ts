@@ -1,3 +1,5 @@
+// AWS RDS unsubscribed
+/*
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 
@@ -30,3 +32,4 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error });
   }
 }
+*/
